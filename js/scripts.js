@@ -20,7 +20,17 @@ class Game {
     }
 
     setupLevel(level) {
-        // will set up a level from json
+        if (typeof level == 'object') {
+            this.tileSize   = level.tileSize;
+            this.gridWidth  = level.gridWidth;
+            this.gridHeight = level.gridHeight;
+
+            this.canvas.width = this.tileSize * this.gridWidth;
+            this.canvas.height = this.tileSize * this.gridHeight;
+
+            this.rows = [];
+            this.objs = [];
+        }
     }
 
     rowAt(y) {
