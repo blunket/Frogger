@@ -20,16 +20,26 @@ class Game {
     }
 
     setupLevel(level) {
+        let game = this;
+
         if (typeof level == 'object') {
-            this.tileSize   = level.tileSize;
-            this.gridWidth  = level.gridWidth;
-            this.gridHeight = level.gridHeight;
+            game.tileSize   = level.tileSize;
+            game.gridWidth  = level.gridWidth;
+            game.gridHeight = level.gridHeight;
 
-            this.canvas.width = this.tileSize * this.gridWidth;
-            this.canvas.height = this.tileSize * this.gridHeight;
+            game.canvas.width = game.tileSize * game.gridWidth;
+            game.canvas.height = game.tileSize * game.gridHeight;
 
-            this.rows = [];
-            this.objs = [];
+            game.rows = [];
+            game.objs = [];
+
+            level.rows.forEach(function(row) {
+                if (row.type == 'road') {
+                    game.addRoad(row.row, row.speed);
+                } else if (row.type == 'river') {
+                    game.addRiver(row.row, row.speed);
+                }
+            });
         }
     }
 
@@ -116,11 +126,21 @@ class Game {
 }
 
 
-const game = new Game("game");
+var level = {
+    tileSize: 16,
+    gridWidth: 15,
+    gridHeight: 10,
+    rows: [
+        {type: 'road',  row: 2, speed: 1},
+        {type: 'road',  row: 3, speed: -1},
+        {type: 'river', row: 5, speed: -1},
+        {type: 'road',  row: 6, speed: 1},
+    ]
+}
 
-game.addRoad(1);
-game.addRoad(3);
-game.addRiver(4);
+const game = new Game("game");
+game.setupLevel(level);
+
 game.draw();
 
 
