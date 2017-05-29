@@ -21,6 +21,7 @@ class GameObject {
         this.y = y;
     }
 
+/*
     draw(game) {
         let w = h = game.tileSize,
             x = this.x * game.tileSize,
@@ -29,4 +30,5 @@ class GameObject {
         game.context.fillStyle = "#ff0";
         game.context.fillRect(x, y, w, h);
     }
+    */
 }

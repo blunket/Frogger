@@ -17,6 +17,7 @@ class Game {
         if (typeof level !== 'undefined') {
             this.setupLevel(level);
         }
+
     }
 
     setupLevel(level) {
@@ -40,6 +41,11 @@ class Game {
                     game.addRiver(row.row, row.speed);
                 }
             });
+
+            let startX = Math.round(game.gridWidth / 2),
+                startY = Math.round(game.gridHeight - 1);
+
+            game.turtle = new Turtle(startX, startY);
         }
     }
 
@@ -110,6 +116,11 @@ class Game {
         });
     }
 
+    drawTurtle() {
+        console.log("- Drawing Turtle");
+        this.turtle.draw(game);
+    }
+
     step() {
         let game = this;
         game.rows.forEach(function(row) {
@@ -122,19 +133,20 @@ class Game {
         game.clear();
         game.drawRows();
         game.drawObjs();
+        game.drawTurtle();
     }
 }
 
 
 var level = {
-    tileSize: 16,
+    tileSize: 30,
     gridWidth: 15,
     gridHeight: 10,
     rows: [
-        {type: 'road',  row: 2, speed: 1},
-        {type: 'road',  row: 3, speed: -1},
-        {type: 'river', row: 5, speed: -1},
-        {type: 'road',  row: 6, speed: 1},
+        {row: 2, type: 'road',  speed: 1},
+        {row: 3, type: 'road',  speed: -1},
+        {row: 5, type: 'river', speed: -1},
+        {row: 6, type: 'road',  speed: 1},
     ]
 }
 
